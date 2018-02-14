@@ -1,0 +1,38 @@
+<div class="form-container mat-typography">
+
+  <h2>Editar Usuario</h2>
+
+  <div class="table-header">
+
+    <form [formGroup]="userForm" class="form" novalidate>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Usuario" formControlName="username" required>
+        <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+          Usuario <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Nombres" formControlName="first_name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Apellidos" formControlName="last_name">
+      </mat-form-field>
+
+      <mat-checkbox formControlName="is_staff">Administrador</mat-checkbox>
+
+      <mat-checkbox formControlName="active">Activo</mat-checkbox>
+
+      <div class="spacer"></div>
+      <div class="button-row">
+        <button mat-raised-button color="primary" type="submit" (click)="save()" [disabled]="userForm.invalid">Guardar</button>
+        <button mat-raised-button color="primary" type="reset" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+    <div class="spacer"></div>
+    <button mat-raised-button color="primary" routerLink="/admin/user/password/{{id.value}}">Cambiar contraseña
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,104 @@
+<div class="table-container mat-typography">
+
+  <h2>Productos</h2>
+
+  <div class="table-header">
+    <form [formGroup]="searchForm" novalidate>
+
+      <mat-form-field class="table-search-input">
+        <input matInput type="text" formControlName="searchInput" placeholder="Búsqueda">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field>
+        <mat-select placeholder="Categoria" formControlName="categorySelect">
+          <mat-option *ngFor="let element of categories" [value]="element.id">
+            {{ element.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Marca" formControlName="brandSelect">
+          <mat-option *ngFor="let element of brands" [value]="element.id">
+            {{ element.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" (click)="search()">Buscar</button>
+      <button mat-raised-button color="primary" type="reset" (click)="clear()">Limpiar</button>
+      <a mat-raised-button color="accent" routerLink="/item/detail/new">Crear</a>
+
+    </form>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="sortTable($event)">
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="bar_code">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Código </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.bar_code}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Precio </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="stock">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.stock}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="stock_min">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad Min. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.stock_min}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="active">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Activo </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-icon *ngIf="element.active">
+          done
+        </mat-icon>
+        <mat-icon *ngIf="!element.active">
+          clear
+        </mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef > Acciones </mat-header-cell>
+      <mat-cell class="button-row" *matCellDef="let element">
+        <button mat-icon-button routerLink="/item/detail/{{element.id}}">
+          <mat-icon aria-hidden="true" title="Editar">edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="delete(element)">
+          <mat-icon aria-hidden="true" title="Eliminar">delete</mat-icon>
+        </button>
+       </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+
+  <mat-paginator
+   [length]=paginatorOptions.length
+   [pageSize]=paginatorOptions.pageSize
+   [pageSizeOptions]=paginatorOptions.pageSizeOptions
+   (page)="pageEvent($event)">
+  </mat-paginator>
+</div>

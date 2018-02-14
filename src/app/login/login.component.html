@@ -1,0 +1,18 @@
+<form [formGroup]="loginForm" class="login-form-container" novalidate>
+
+  <mat-form-field>
+    <input matInput type="text" placeholder="Usuario" formControlName="username" required>
+    <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+      Usuario <strong>obligatorio</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="password" placeholder="Contraseña" formControlName="password" required>
+    <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+      Contraseña <strong>obligatoria</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" (click)="login()" [disabled]="loginForm.invalid">Ingresar</button>
+</form>

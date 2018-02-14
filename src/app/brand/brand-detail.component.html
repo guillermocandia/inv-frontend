@@ -1,0 +1,25 @@
+<div class="form-container mat-typography">
+
+  <h2>Editar Marca</h2>
+
+  <div class="table-header">
+
+    <form [formGroup]="brandForm" class="form" novalidate>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Nombre de marca" formControlName="name" required>
+        <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
+          Nombre <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox formControlName="active">Activo</mat-checkbox>
+      <div class="spacer"></div>
+      <div class="button-row">
+        <button mat-raised-button color="primary" type="submit" (click)="save()" [disabled]="brandForm.invalid">Guardar</button>
+        <button mat-raised-button color="primary" type="reset" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+
+  </div>
+
+</div>

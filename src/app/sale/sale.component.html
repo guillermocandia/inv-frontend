@@ -1,0 +1,101 @@
+<div class="table-container mat-typography">
+
+  <h2>Ventas</h2>
+
+  <div class="table-header">
+    <form [formGroup]="searchForm" novalidate>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="date_gteInput" formControlName="date_gteInput" placeholder="Desde">
+        <mat-datepicker-toggle matSuffix [for]="date_gteInput"></mat-datepicker-toggle>
+        <mat-datepicker #date_gteInput></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="date_lteInput" formControlName="date_lteInput" placeholder="Hasta">
+        <mat-datepicker-toggle matSuffix [for]="date_lteInput"></mat-datepicker-toggle>
+        <mat-datepicker #date_lteInput></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="" formControlName="activeSelect">
+          <mat-option [value]="null">Todas</mat-option>
+          <mat-option [value]="true">Solo Vigentes</mat-option>
+          <mat-option [value]="false">Solo Nulas</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Medio de pago" formControlName="paymentMethodSelect">
+          <mat-option [value]="null"></mat-option>
+          <mat-option *ngFor="let element of paymentMethods" [value]="element.id">
+            {{ element.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" (click)="search()">Buscar</button>
+      <button mat-raised-button color="primary" type="reset" (click)="clear()">Limpiar</button>
+    </form>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.date.toLocaleString('es-Cl') }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+      <mat-cell *matCellDef="let element"> ${{element.total}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="paymentmethod">
+      <mat-header-cell *matHeaderCellDef> Medio de pago </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+         {{ element.paymentmethod ? element.paymentmethod.name : ''}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="active">
+      <mat-header-cell *matHeaderCellDef> Vigente </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-icon *ngIf="element.active">
+          done
+        </mat-icon>
+        <mat-icon *ngIf="!element.active">
+          clear
+        </mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef > Acciones </mat-header-cell>
+      <mat-cell class="button-row" *matCellDef="let element">
+        <button mat-icon-button routerLink="/sale/detail/{{element.id}}">
+          <mat-icon aria-hidden="true" title="Ver">search</mat-icon>
+        </button>
+        <button mat-icon-button (click)="invalidate(element)" [disabled]="!element.active">
+          <mat-icon aria-hidden="true" title="Anular">not_interested</mat-icon>
+        </button>
+       </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+
+  <mat-paginator
+   [length]=paginatorOptions.length
+   [pageSize]=paginatorOptions.pageSize
+   [pageSizeOptions]=paginatorOptions.pageSizeOptions
+   (page)="pageEvent($event)">
+  </mat-paginator>
+</div>

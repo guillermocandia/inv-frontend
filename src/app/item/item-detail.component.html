@@ -1,0 +1,81 @@
+<div class="form-container mat-typography">
+
+  <h2>Editar Producto</h2>
+
+  <div class="table-header">
+
+    <form [formGroup]="itemForm" class="form" novalidate>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Códido" formControlName="bar_code" required>
+        <mat-error *ngIf="bar_code.invalid && (bar_code.dirty || bar_code.touched)">
+          Código <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Nombre" formControlName="name" required>
+        <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
+          Nombre <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Categoria" formControlName="categorySelect" multiple>
+          <mat-option *ngFor="let element of categories" [value]="element.id">
+            {{ element.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Marca" formControlName="brandSelect">
+          <mat-option [value]="null"></mat-option>
+          <mat-option *ngFor="let element of brands" [value]="element.id">
+            {{ element.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="number" placeholder="Precio" formControlName="price" required>
+        <mat-error *ngIf="price.invalid && (price.dirty || price.touched)">
+          <span *ngIf="price.errors.required">Precio <strong>obligatorio</strong></span>
+          <span *ngIf="price.errors.min">Precio debe ser mayor a 0</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="number" placeholder="Cantidad" formControlName="stock" required>
+        <mat-error *ngIf="stock.invalid && (stock.dirty || stock.touched)">
+          Cantidad <strong>obligatoria</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="number" placeholder="Cantidad mínima" formControlName="stock_min" required>
+        <mat-error *ngIf="stock_min.invalid && (stock_min.dirty || stock_min.touched)">
+          Cantidad mínima <strong>obligatoria</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Embalaje" formControlName="packaging">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Notas" formControlName="comment">
+      </mat-form-field>
+
+      <mat-checkbox formControlName="active">Activo</mat-checkbox>
+      <div class="spacer"></div>
+      <div class="button-row">
+        <a mat-raised-button color="primary" type="submit" (click)="save()" [disabled]="itemForm.invalid">Guardar</a>
+        <a mat-raised-button color="primary" type="reset" (click)="cancel()">Cancelar</a>
+        <!-- Se usa a en vez de button para prevenir el submit por el súfijo del lector -->
+      </div>
+    </form>
+
+  </div>
+
+</div>

@@ -1,0 +1,79 @@
+<mat-toolbar *ngIf="showMenu" color="primary">
+  <button mat-button>
+    Creaciones Seminario
+  </button>
+  <button mat-button [matMenuTriggerFor]="inventoryMenu">
+    <mat-icon aria-hidden="true">list</mat-icon>
+    Inventario
+  </button>
+  <button mat-button [matMenuTriggerFor]="saleMenu">
+    <mat-icon aria-hidden="true">attach_money</mat-icon>
+    Ventas
+  </button>
+  <button mat-button [matMenuTriggerFor]="adminMenu">
+    <mat-icon aria-hidden="true">build</mat-icon>
+    Administración
+  </button>
+
+  <span class="fill-remaining-space"></span>
+  <button mat-button [matMenuTriggerFor]="userMenu">
+    <mat-icon aria-hidden="true">person</mat-icon>
+    {{ user ? user.username: '' }}
+  </button>
+  <button mat-button (click)="logout()">
+    <mat-icon aria-hidden="true">exit_to_app</mat-icon>
+    Salir
+  </button>
+</mat-toolbar>
+
+<mat-menu #inventoryMenu="matMenu" overlapTrigger="false">
+  <button mat-menu-item routerLink="/category">
+    <mat-icon aria-hidden="true">reorder</mat-icon>
+    <span>Categorías</span>
+  </button>
+  <button mat-menu-item routerLink="/brand">
+    <mat-icon aria-hidden="true">subject</mat-icon>
+    <span>Marcas</span>
+  </button>
+  <button mat-menu-item routerLink="/item">
+    <mat-icon aria-hidden="true">shopping_basket</mat-icon>
+    <span>Productos</span>
+  </button>
+</mat-menu>
+
+<mat-menu #saleMenu="matMenu" overlapTrigger="false">
+  <button mat-menu-item routerLink="/sale/detail/new">
+    <mat-icon aria-hidden="true">subject</mat-icon>
+    <span>Nueva Venta</span>
+  </button>
+  <button mat-menu-item routerLink="/sale">
+    <mat-icon aria-hidden="true">reorder</mat-icon>
+    <span>Ventas</span>
+  </button>
+  <button mat-menu-item routerLink="/report/sale">
+    <mat-icon aria-hidden="true">description</mat-icon>
+    <span>Reportes</span>
+  </button>
+</mat-menu>
+
+<mat-menu #adminMenu="matMenu" overlapTrigger="false">
+  <button mat-menu-item routerLink="/admin/user">
+    <mat-icon aria-hidden="true">supervisor_account</mat-icon>
+    <span>Usuarios</span>
+  </button>
+  <button mat-menu-item routerLink="/sale/payment-method">
+    <mat-icon aria-hidden="true">settings</mat-icon>
+    <span>Medios de pago</span>
+  </button>
+</mat-menu>
+
+<mat-menu #userMenu="matMenu" overlapTrigger="false">
+  <button mat-menu-item routerLink="/admin/user/detail/{{ user ? user.id: '' }}">
+    <mat-icon aria-hidden="true">account_circle</mat-icon>
+    <span>Perfil</span>
+  </button>
+  <button mat-menu-item routerLink="/profile/passwd">
+    <mat-icon aria-hidden="true">security</mat-icon>
+    <span>Cambiar Contraseña</span>
+  </button>
+</mat-menu>

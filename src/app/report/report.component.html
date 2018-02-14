@@ -1,0 +1,43 @@
+<div class="table-container mat-typography">
+
+  <h2>Reportes</h2>
+
+  <div class="table-header">
+    <form [formGroup]="searchForm" novalidate>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="date_gteInput" formControlName="date_gteInput" placeholder="Desde">
+        <mat-datepicker-toggle matSuffix [for]="date_gteInput"></mat-datepicker-toggle>
+        <mat-datepicker #date_gteInput></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="date_lteInput" formControlName="date_lteInput" placeholder="Hasta">
+        <mat-datepicker-toggle matSuffix [for]="date_lteInput"></mat-datepicker-toggle>
+        <mat-datepicker #date_lteInput></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="" formControlName="activeSelect">
+          <mat-option [value]="null">Todas</mat-option>
+          <mat-option [value]="true">Solo Vigentes</mat-option>
+          <mat-option [value]="false">Solo Nulas</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Medio de pago" formControlName="paymentMethodSelect">
+          <mat-option [value]="null"></mat-option>
+          <mat-option *ngFor="let element of paymentMethods" [value]="element.id">
+            {{ element.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" (click)="search()">Buscar</button>
+      <button mat-raised-button color="primary" type="reset" (click)="clear()">Limpiar</button>
+    </form>
+  </div>
+
+
+</div>

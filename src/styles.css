@@ -1,0 +1,106 @@
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+body {
+  margin: 0 0 0 0;
+}
+
+header {
+  min-height: 50px;
+}
+
+main {
+  margin: 0 auto;
+  max-width: 1024px;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.login-form-container {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.login-form-container > * {
+  width: 100%;
+}
+
+.snackBar-error {
+  color: red;
+}
+
+.snackBar-success {
+  color: green;
+}
+
+.table-container {
+  padding-top: 30px;
+  margin: 0 auto;
+  width: 900px;
+}
+
+.button-row {
+  align-items: center;
+  justify-content: space-around;
+  width: 50px;
+}
+
+.table-search {
+  min-height: 40px;
+  padding: 8px 24px 0;
+}
+
+.table-search-input {
+  font-size: 14px;
+  width: 60%;
+}
+
+.form-container {
+  padding-top: 30px;
+  margin: 0 auto;
+  width: 500px;
+}
+
+.form {
+  margin: 0 auto;
+  width: 500px;
+}
+
+.form > * {
+  width: 100%;
+}
+
+.spacer {
+  height: 20px;
+}
+
+.total {
+  display: flex;
+  flex-flow: row-reverse;
+  padding-right: 40px;
+}
+
+.total h2 {
+  font-size: 30px !important;
+}
+
+.sale-detail-header {
+  display: flex;
+}
+
+.nula {
+  color: red;
+}
+
+.sale-bar_code {
+  width: 300px;
+}
+
+.mat-header-cell {
+  font-size: 18px;
+}
+
+.mat-cell {
+  font-size: 22px;
+}

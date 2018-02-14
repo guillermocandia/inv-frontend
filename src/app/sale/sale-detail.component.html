@@ -1,0 +1,105 @@
+<div class="table-container mat-typography">
+
+  <h2>{{new ? 'Nueva ' : 'Detalle '}}Venta</h2>
+
+  <div class="table-header">
+
+    <div *ngIf="!new" class="sale-detail-header">
+      <span>Fecha: {{ sale && sale.date ? sale.date.toLocaleString('es-Cl') : '' }}</span>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <span>Medio de Pago: {{ sale && sale.paymentmethod ? sale.paymentmethod.name : '' }}</span>
+      <span class="fill-remaining-space"></span>
+      <span class="nula" *ngIf="sale && !sale.active">Venta Nula&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <button *ngIf="sale && sale.active" mat-raised-button color="warn" (click)="invalidate()">Anular</button>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <button mat-raised-button color="primary" (click)="cancel()">Volver</button>
+    </div>
+
+    <div *ngIf="new" class="sale-detail-header">
+      <form [formGroup]="searchForm" novalidate>
+        <mat-form-field class="sale-bar_code">
+          <input autocomplete="off" #focus matInput type="text" formControlName="searchInput" placeholder="Código">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" (click)="search()">
+          <mat-icon aria-hidden="true" title="Editar">search</mat-icon>Buscar
+        </button>
+        <mat-form-field>
+          <mat-select placeholder="Medio de pago" formControlName="paymentMethodSelect" required>
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let element of paymentMethods" [value]="element">
+              {{ element.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <span class="fill-remaining-space"></span>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="!allow_save()">Guardar</button>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <button mat-raised-button color="warn" (click)="cancel()">Cancelar</button>
+    </div>
+
+    <mat-table #table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="bar_code">
+        <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.item.bar_code}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.item.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+        <mat-cell *matCellDef="let element"> ${{element.price}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button *ngIf="new" mat-icon-button (click)="sub(element)">
+            <mat-icon aria-hidden="true" title="Quitar">remove_circle</mat-icon>
+          </button>
+           {{element.quantity}}
+           <button *ngIf="new" mat-icon-button (click)="add(element)">
+             <mat-icon aria-hidden="true" title="Añadir">add_circle</mat-icon>
+           </button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="subtotal">
+        <mat-header-cell *matHeaderCellDef> SubTotal </mat-header-cell>
+        <mat-cell *matCellDef="let element"> ${{element.quantity * element.price}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button *ngIf="new" mat-icon-button (click)="del(element)">
+            <mat-icon aria-hidden="true" title="Eliminar">delete_forever</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+
+    <div class="spacer"></div>
+
+    <div class="total">
+      <span>
+        <h2>TOTAL:  ${{ sale ? sale.total : 0}}</h2>
+      </span>
+    </div>
+
+  </div>
+
+</div>
